@@ -1,0 +1,6 @@
+/summon stuff:egg
+/gamerule doDaylightCycle false
+/time set 6000
+/give @p stuff:egg_spawn_egg
+/enchant @a minecraft:sharpness 5
+/give @p stuff:coin

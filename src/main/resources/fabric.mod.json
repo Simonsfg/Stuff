@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "stuff",
+  "version": "${version}",
+  "name": "Stuff",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/stuff/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.simon.stuff.client.StuffClient"
+    ],
+    "main": [
+      "org.simon.stuff.Stuff"
+    ]
+  },
+  "mixins": [
+    "stuff.mixins.json",
+    {
+      "config": "stuff.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "geckolib": ">=4.4.2"
+  }
+}
