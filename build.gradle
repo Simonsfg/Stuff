@@ -19,27 +19,63 @@ loom {
             sourceSet sourceSets.client
         }
     }
+
+    runs {
+        // This adds a new gradle task that runs the datagen API: "gradlew runDatagen"
+        datagen {
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=stuff"
+
+            runDir "build/datagen"
+        }
+    }
+}
+
+// Add the generated resources to the main source set
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                'src/main/generated'
+            ]
+        }
+    }
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-    
-    // Add this repository
+    // Keep your existing repositories
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    
+    // Add this new repository for fabwork
+    maven { url "https://cursemaven.com" }
+
+    maven { name 'minelp-releases'; url 'https://repo.minelittlepony-mod.com/maven/release' }
+
+    // Add TerraformersMC repository
+    maven { name 'TerraformersMC'; url 'https://maven.terraformersmc.com/' }
 }
 
 dependencies {
-       minecraft "com.mojang:minecraft:${project.minecraft_version}"
-       mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-       modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-       modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-       
-       // Add GeckoLib dependency
-       modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.4:4.4.2'
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Fabwork dependency
+    modApi "com.sollace:fabwork:${project.fabwork_version}"
+    include "com.sollace:fabwork:${project.fabwork_version}"
+
+    // GeckoLib dependency
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
+
+    // terraform dependency
+    modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraformer_api_version}"
+    include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraformer_api_version}"
+
+    modCompileOnly("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {

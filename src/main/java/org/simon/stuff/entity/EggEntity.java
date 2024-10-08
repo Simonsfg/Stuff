@@ -7,8 +7,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
-import org.simon.stuff.Stuff;
-import org.simon.stuff.item.EggSpawnEggItem;
+import org.simon.stuff.registry.ItemRegistry;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -40,10 +39,6 @@ public class EggEntity extends PassiveEntity implements GeoEntity {
         this.setVelocity(0, 0, 0);
     }
 
-    public static EntityType<EggEntity> getEntityType() {
-        return Stuff.EGG;
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         // No animations to register
@@ -57,8 +52,6 @@ public class EggEntity extends PassiveEntity implements GeoEntity {
     @Override
     public void dropLoot(DamageSource source, boolean causedByPlayer) {
         super.dropLoot(source, causedByPlayer);
-        
-        // Drop the egg spawn item
-        this.dropItem(EggSpawnEggItem.EGG_SPAWN_EGG);
+        this.dropItem(ItemRegistry.EGG_SPAWN_EGG);
     }
 }

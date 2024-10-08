@@ -1,0 +1,58 @@
+{
+  "among_us": {
+    "sounds": [
+      {
+        "name": "stuff:among_us",
+        "stream": true
+      }
+    ]
+  },
+  "bitches": {
+    "sounds": [
+      {
+        "name": "stuff:bitches",
+        "stream": true
+      }
+    ]
+  },
+  "hamburg": {
+    "sounds": [
+      {
+        "name": "stuff:hamburg",
+        "stream": true
+      }
+    ]
+  },
+  "its_lit": {
+    "sounds": [
+      {
+        "name": "stuff:its_lit",
+        "stream": true
+      }
+    ]
+  },
+  "lockdown": {
+    "sounds": [
+      {
+        "name": "stuff:lockdown",
+        "stream": true
+      }
+    ]
+  },
+  "arschrap": {
+    "sounds": [
+      {
+        "name": "stuff:arschrap",
+        "stream": true
+      }
+    ]
+  },
+  "dota3": {
+    "sounds": [
+      {
+        "name": "stuff:dota3",
+        "stream": true
+      }
+    ]
+  }
+  }

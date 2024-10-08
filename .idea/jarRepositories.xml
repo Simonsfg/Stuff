@@ -46,5 +46,20 @@
       <option name="name" value="maven" />
       <option name="url" value="https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="minelp-releases" />
+      <option name="name" value="minelp-releases" />
+      <option name="url" value="https://repo.minelittlepony-mod.com/maven/release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="TerraformersMC" />
+      <option name="name" value="TerraformersMC" />
+      <option name="url" value="https://maven.terraformersmc.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://cursemaven.com" />
+    </remote-repository>
   </component>
 </project>

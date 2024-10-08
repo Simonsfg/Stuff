@@ -4,3 +4,46 @@
 /give @p stuff:egg_spawn_egg
 /enchant @a minecraft:sharpness 5
 /give @p stuff:coin
+/summon stuff:egg
+/effect give @a stuff:custom_effect
+/effect give @a stuff:custom_effect 1
+/effect give @a stuff:custom_effect
+/effect give @a stuff:custom_effect 10
+/effect give @a stuff:custom_effect 1
+/effect give @a stuff:custom_effect 10
+/give @a stuff:music_disc_bitches
+/gamemode survival
+/give @a stuff:music_disc_bitches
+/gamemode creative
+/give @a stuff:music_disc_bitches
+/give @p stuff:music_disc_among_us
+/give @p stuff:music_disc_hamburg
+/give @p stuff:music_disc_its_lit
+/give @p stuff:music_disc_lockdown
+/weather clear
+/gamerule doWeatherCycle false
+/give @a stuff:music_disc_arschrap
+/give @a stuff:music_disc_dota3
+/summon skeleton ~ ~ ~ {Invulnerable:1b,PersistenceRequired:1b,Attributes:[{Name:"generic.movement_speed",Base:-1024f}]}
+/gamemode survival
+/summon skeleton ~ ~ ~ {Invulnerable:1b,PersistenceRequired:1b,HandItems:[{id:bow,Count:1}],Attributes:[{Name:"generic.movement_speed",Base:-1024f}],HandDropChances:[0f]}
+/gamemode creative
+/give @a minecraft:command_block
+/gamemode survival
+/gamemode creative
+/effect give @a minecraft:resistance infinite 10
+/effect give @a minecraft:resistance infinite 10 false
+/effect clear
+/effect give @a minecraft:resistance infinite 10 false
+/effect clear
+/effect give @a minecraft:resistance infinite 10 true
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/effect give @a minecraft:saturation infinite 1 true
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/gamerule randomTickSpeed 100
+/gamerule randomTickSpeed 1000
+/gamemode survival

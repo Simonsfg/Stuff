@@ -1,5 +1,26 @@
 {
   "entity.stuff.egg": "Egg",
+
   "item.stuff.coin": "Coin",
-  "item.stuff.egg_spawn_egg": "Egg"
+  "item.stuff.egg_spawn_egg": "Egg",
+  "item.stuff.weed_seeds": "Weed Seeds",
+
+  "effect.stuff.custom_effect": "Custom Effect",
+
+  "item.stuff.music_disc_among_us": "Music Disc",
+  "item.stuff.music_disc_among_us.desc": "Timo Cool - Among Us",
+  "item.stuff.music_disc_bitches": "Music Disc",
+  "item.stuff.music_disc_bitches.desc": "Timo Cool - Bitches",
+  "item.stuff.music_disc_hamburg": "Music Disc",
+  "item.stuff.music_disc_hamburg.desc": "lil Schwen$ - Hamburg",
+  "item.stuff.music_disc_its_lit": "Music Disc",
+  "item.stuff.music_disc_its_lit.desc": "Timo Cool - It's lit",
+  "item.stuff.music_disc_lockdown": "Music Disc",
+  "item.stuff.music_disc_lockdown.desc": "Timo Cool - Lockdown",
+  "item.stuff.music_disc_arschrap": "Music Disc",
+  "item.stuff.music_disc_arschrap.desc": "gostKid - Arschrap",
+  "item.stuff.music_disc_dota3": "Music Disc",
+  "item.stuff.music_disc_dota3.desc": "gostKid - Dota3",
+
+  "itemGroup.coin": "Stuff"
 }

@@ -1,43 +1,57 @@
 package org.simon.stuff;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.simon.stuff.item.CoinItem;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import org.simon.stuff.entity.EggEntity;
+import net.minecraft.util.hit.HitResult;
+import org.simon.stuff.config.JsonConfig;
+import org.simon.stuff.config.StuffConfig;
+import org.simon.stuff.entity.drug.DrugProperties;
+import org.simon.stuff.registry.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class Stuff implements ModInitializer {
 
     public static final String MOD_ID = "stuff";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final EntityType<EggEntity> EGG = Registry.register(
-            Registries.ENTITY_TYPE,
-            new Identifier(MOD_ID, "egg"),
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EggEntity::new)
-                    .dimensions(EntityDimensions.fixed(3.1f, 4.4f))
-                    .forceTrackedVelocityUpdates(true)
-                    .trackedUpdateRate(10)
-                    .trackedUpdateRate(20)
-                    .build()
-    );
+    private static final Supplier<JsonConfig.Loader<StuffConfig>> CONFIG_LOADER = JsonConfig.create("stuff.json", StuffConfig::new);
 
-    public static final Item COIN = registerItem("coin", new CoinItem(new FabricItemSettings()));
+    public static Supplier<Optional<DrugProperties>> globalDrugProperties = Optional::empty;
+    public static Supplier<Optional<HitResult>> crossHairTarget = Optional::empty;
 
-
-    @Override
-    public void onInitialize() {
-        // No need to register the item group separately
+    public static Optional<DrugProperties> getGlobalDrugProperties() {
+        return globalDrugProperties.get();
     }
 
-    private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(MOD_ID, name), item);
+    public static Optional<HitResult> getCrossHairTarget() {
+        return crossHairTarget.get();
+    }
+
+    public static JsonConfig.Loader<StuffConfig> getConfigLoader() {
+        return CONFIG_LOADER.get();
+    }
+
+    public static StuffConfig getConfig() {
+        return getConfigLoader().getData();
+    }
+
+    public static Identifier id(String name) {
+        return new Identifier("stuff", name);
+    }
+
+
+    @Override   
+    public void onInitialize() {
+        LOGGER.info("Initializing Stuff mod");
+        SoundRegistry.registerSounds();
+        EntityRegistry.registerEntities();
+        ItemRegistry.registerItems();
+        EffectRegistry.registerEffects();
+        ItemGroupRegistry.registerItemGroups();
     }
 }
 
