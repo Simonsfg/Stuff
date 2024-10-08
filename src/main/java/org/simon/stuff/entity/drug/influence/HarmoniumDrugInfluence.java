@@ -5,8 +5,8 @@
 
 package org.simon.stuff.entity.drug.influence;
 
-import ivorius.psychedelicraft.entity.drug.*;
-import ivorius.psychedelicraft.entity.drug.type.HarmoniumDrug;
+import org.simon.stuff.entity.drug.*;
+import org.simon.stuff.entity.drug.type.HarmoniumDrug;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.MathHelper;
 

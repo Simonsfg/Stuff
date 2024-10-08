@@ -9,7 +9,6 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.joml.Vector3f;
 import org.simon.stuff.Stuff;
 import org.simon.stuff.item.*;
 
@@ -28,11 +27,6 @@ public class ItemRegistry {
     public static final Item MUSIC_DISC_LOCKDOWN = registerItem("music_disc_lockdown", new BaseMusicDisc(7, SoundRegistry.LOCKDOWN_SOUND, new FabricItemSettings(), 131));
     public static final Item MUSIC_DISC_DOTA3 = registerItem("music_disc_dota3", new BaseMusicDisc(7, SoundRegistry.DOTA3_SOUND, new FabricItemSettings(), 201));
     public static final Item MUSIC_DISC_ARSCHRAP = registerItem("music_disc_arschrap", new BaseMusicDisc(7, SoundRegistry.ARSCHRAP_SOUND, new FabricItemSettings(), 74));
-
-    public static final SmokeableItem JOINT = registerItem("joint", new SmokeableItem(
-            new Item.Settings().maxCount(1).maxDamage(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
-            new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.20f)
-    ));
 
 
 

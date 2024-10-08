@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import com.sollace.fabwork.api.packets.HandledPacket;
 
-import ivorius.psychedelicraft.entity.drug.DrugProperties;
-import ivorius.psychedelicraft.entity.drug.hallucination.AbstractEntityHallucination;
+import org.simon.stuff.entity.drug.DrugProperties;
+import org.simon.stuff.entity.drug.hallucination.AbstractEntityHallucination;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;

@@ -7,33 +7,33 @@ import net.minecraft.registry.*;
 import net.minecraft.registry.tag.TagKey;
 
 public interface StuffTags {
-    TagKey<Block> BARRELS = of("barrels");
-    TagKey<Block> DRYING_TABLES = of("drying_tables");
+    TagKey<Block> BARRELS = ofBlock("barrels");
+    TagKey<Block> DRYING_TABLES = ofBlock("drying_tables");
 
-    static TagKey<Block> of(String name) {
+    static TagKey<Block> ofBlock(String name) {
         return TagKey.of(RegistryKeys.BLOCK, Stuff.id(name));
     }
 
     interface Items {
-        TagKey<Item> BOTTLES = of("bottles");
-        TagKey<Item> BARRELS = of("barrels");
-        TagKey<Item> PLACEABLE = of("placeable");
-        TagKey<Item> DRINK_RECEPTICALS = of("drink_recepticals");
-        TagKey<Item> SUITABLE_HOT_DRINK_RECEPTICALS = of("suitable_hot_drink_recepticals");
-        TagKey<Item> SUITABLE_ALCOHOLIC_DRINK_RECEPTICALS = of("suitable_alcoholic_drink_recepticals");
-        TagKey<Item> CAN_GO_INTO_PAPER_BAG = of("can_go_into_paper_bag");
-        TagKey<Item> DRUG_CROP_SEEDS = of("drug_crop_seeds");
+        TagKey<Item> BOTTLES = ofItem("bottles");
+        TagKey<Item> BARRELS = ofItem("barrels");
+        TagKey<Item> PLACEABLE = ofItem("placeable");
+        TagKey<Item> DRINK_RECEPTICALS = ofItem("drink_recepticals");
+        TagKey<Item> SUITABLE_HOT_DRINK_RECEPTICALS = ofItem("suitable_hot_drink_recepticals");
+        TagKey<Item> SUITABLE_ALCOHOLIC_DRINK_RECEPTICALS = ofItem("suitable_alcoholic_drink_recepticals");
+        TagKey<Item> CAN_GO_INTO_PAPER_BAG = ofItem("can_go_into_paper_bag");
+        TagKey<Item> DRUG_CROP_SEEDS = ofItem("drug_crop_seeds");
 
-        static TagKey<Item> of(String name) {
+        static TagKey<Item> ofItem(String name) {
             return TagKey.of(RegistryKeys.ITEM, Stuff.id(name));
         }
     }
 
     interface Entities {
-        TagKey<EntityType<?>> MULTIPLE_ENTITY_HALLUCINATIONS = of("multiple_entity_hallucinations");
-        TagKey<EntityType<?>> SINGLE_ENTITY_HALLUCINATIONS = of("single_entity_hallucinations");
+        TagKey<EntityType<?>> MULTIPLE_ENTITY_HALLUCINATIONS = ofEntity("multiple_entity_hallucinations");
+        TagKey<EntityType<?>> SINGLE_ENTITY_HALLUCINATIONS = ofEntity("single_entity_hallucinations");
 
-        static TagKey<EntityType<?>> of(String name) {
+        static TagKey<EntityType<?>> ofEntity(String name) {
             return TagKey.of(RegistryKeys.ENTITY_TYPE, Stuff.id(name));
         }
     }

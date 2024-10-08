@@ -1,5 +1,6 @@
 package org.simon.stuff.block;
 
+import net.minecraft.block.piston.PistonBehavior;
 import org.simon.stuff.Stuff;
 import org.simon.stuff.block.entity.StuffBlockEntities;
 
@@ -16,6 +17,12 @@ public interface StuffBlocks {
             .emissiveLighting(BlockConstructionUtils::always)
             .air().nonOpaque().noBlockBreakParticles().dropsNothing()
     ));
+
+    Block PLACED_DRINK = register("placed_drink", new PlacedDrinksBlock(Settings.create()
+            .breakInstantly().nonOpaque().suffocates(BlockConstructionUtils::never).blockVision(BlockConstructionUtils::never)
+            .pistonBehavior(PistonBehavior.DESTROY)
+    ));
+
 
 
     static <T extends Block> T register(String name, T block) {

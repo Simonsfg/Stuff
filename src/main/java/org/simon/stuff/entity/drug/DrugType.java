@@ -23,6 +23,7 @@ public record DrugType (Identifier id, Function<DrugType, Drug> constructor) {
     public static final DrugType CANNABIS = register("cannabis", type -> new CannabisDrug(1, 0.0002d));
     public static final DrugType ZERO = register("zero", type -> new SimpleDrug(type, 1, 0.0001d));
     public static final DrugType POWER = register("power", type -> new PowerDrug(0.95, 0.0001d));
+    public static final DrugType HARMONIUM = register("harmonium", type -> new HarmoniumDrug(1, 0.0003d));
 
     public Drug create() {
         return constructor.apply(this);
