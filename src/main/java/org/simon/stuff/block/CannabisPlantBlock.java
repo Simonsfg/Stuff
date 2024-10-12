@@ -1,8 +1,3 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package org.simon.stuff.block;
 
 import com.mojang.serialization.MapCodec;
@@ -20,16 +15,18 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.*;
+import org.simon.stuff.item.StuffItems;
 
 public class CannabisPlantBlock extends CropBlock {
     public static final MapCodec<CannabisPlantBlock> CODEC = createCodec(CannabisPlantBlock::new);
     public static final int MAX_AGE = 15;
-    public static final int MAX_AGE_WHILE_COVERED = 11;
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 16, 14);
 
     public static final BooleanProperty GROWING = BooleanProperty.of("growing");
     public static final BooleanProperty NATURAL = BooleanProperty.of("natural");
+
+    public static final IntProperty AGE = Properties.AGE_15;
 
     public CannabisPlantBlock(Settings settings) {
         super(settings.ticksRandomly().nonOpaque());
@@ -47,7 +44,7 @@ public class CannabisPlantBlock extends CropBlock {
 
     @Override
     public IntProperty getAgeProperty() {
-        return Properties.AGE_15;
+        return AGE;
     }
 
     @Override
@@ -60,7 +57,8 @@ public class CannabisPlantBlock extends CropBlock {
         return SHAPE;
     }
 
-    public int getMaxAge(BlockState state) {
+    @Override
+    public int getMaxAge() {
         return MAX_AGE;
     }
 
@@ -74,12 +72,12 @@ public class CannabisPlantBlock extends CropBlock {
 
     @Override
     protected ItemConvertible getSeedsItem() {
-        return asItem();
+        return StuffItems.CANNABIS_SEEDS;
     }
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isOf(this) || super.canPlantOnTop(floor, world, pos);
+        return super.canPlantOnTop(floor, world, pos);
     }
 
     @Override
@@ -93,45 +91,73 @@ public class CannabisPlantBlock extends CropBlock {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (world.getBaseLightLevel(pos.up(), 0) >= 9 && random.nextFloat() < getRandomGrowthChance()) {
-            if (isFertilizable(world, pos, state)) {
-                applyGrowth(world, pos, state, false);
-            }
-        }
-    }
-
-    public void applyGrowth(World world, BlockPos pos, BlockState state, boolean bonemeal) {
-        int number = bonemeal ? world.random.nextInt(4) + 1 : 1;
-
-        for (int i = 0; i < number; i++) {
-            if (state.get(getAgeProperty()) < getMaxAge(state)) {
-                state = state.cycle(getAgeProperty());
-                world.setBlockState(pos, state, Block.NOTIFY_ALL);
-            } else if (canGrowUpwards(world, pos, state)) {
-                pos = pos.up();
-                state = getDefaultState();
-                world.setBlockState(pos, state, Block.NOTIFY_ALL);
-            }
+        if (world.getBaseLightLevel(pos, 0) >= 9 && random.nextFloat() < getRandomGrowthChance()) {
+            grow(world, random, pos, state);
         }
     }
 
     protected int getPlantSize(WorldView world, BlockPos pos) {
         int plantSize = 1;
-        while (world.getBlockState(pos.down(plantSize)).isOf(this)) {
-            ++plantSize;
+        BlockPos checkPos = pos.down();
+        while (world.getBlockState(checkPos).isOf(this)) {
+            plantSize++;
+            checkPos = checkPos.down();
         }
         return plantSize;
     }
 
-    protected boolean canGrowUpwards(World world, BlockPos pos, BlockState state) {
-        return world.isAir(pos.up())
-                && getPlantSize(world, pos) < getMaxHeight()
-                && state.get(getAgeProperty()) > MAX_AGE_WHILE_COVERED;
+    @Override
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+        int currentAge = state.get(getAgeProperty());
+        int maxAge = getMaxAge();
+
+        if (currentAge < maxAge) {
+            int newAge = Math.min(currentAge + 1 + world.random.nextInt(2), maxAge);
+            world.setBlockState(pos, state.with(getAgeProperty(), newAge), Block.NOTIFY_ALL);
+            
+            if (newAge == maxAge) {
+                growUpwards(world, pos, state);
+            }
+        } else {
+            growUpwards(world, pos, state);
+        }
+    }
+
+    private void growUpwards(ServerWorld world, BlockPos pos, BlockState state) {
+        BlockPos abovePos = pos.up();
+        if (getPlantSize(world, pos) < getMaxHeight()) {
+            if (!world.isAir(abovePos)) {
+                world.setBlockState(pos, getDefaultState().with(GROWING, false).with(NATURAL, state.get(NATURAL)).with(getAgeProperty(), getMaxAge() - 1), Block.NOTIFY_ALL);
+            } else {
+                world.setBlockState(abovePos, getDefaultState().with(NATURAL, true), Block.NOTIFY_ALL);
+            }
+        } else {
+            world.setBlockState(pos, getDefaultState().with(GROWING, false).with(NATURAL, state.get(NATURAL)).with(getAgeProperty(), getMaxAge()), Block.NOTIFY_ALL);
+        }
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        applyGrowth(world, pos, state, true);
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            breakEntirePlant(world, pos);
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    private void breakEntirePlant(World world, BlockPos pos) {
+        // Break blocks above
+        BlockPos above = pos.up();
+        while (world.getBlockState(above).isOf(this)) {
+            world.breakBlock(above, true);
+            above = above.up();
+        }
+
+        // Break blocks below
+        BlockPos below = pos.down();
+        while (world.getBlockState(below).isOf(this)) {
+            world.breakBlock(below, true);
+            below = below.down();
+        }
     }
 
     @Override

@@ -11,7 +11,6 @@ import org.simon.stuff.Stuff;
  */
 public interface Channel {
     S2CPacketType<MsgDrugProperties> UPDATE_DRUG_PROPERTIES = SimpleNetworking.serverToClient(Stuff.id("update_drug_properties"), MsgDrugProperties::new);
-    S2CPacketType<MsgHallucinate> HALLUCINATE = SimpleNetworking.serverToClient(Stuff.id("hallucinate"), MsgHallucinate::new);
 
     static void bootstrap() { }
 

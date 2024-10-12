@@ -1,0 +1,20 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "stuff:item/paper_bag"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "stuff:filled": 0.5
+            },
+            "model": "stuff:item/paper_bag_filled"
+        },
+        {
+            "predicate": {
+                "stuff:filled": 1
+            },
+            "model": "stuff:item/paper_bag_overflowing"
+        }
+    ]
+}

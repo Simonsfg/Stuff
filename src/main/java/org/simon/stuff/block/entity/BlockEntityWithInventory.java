@@ -1,8 +1,3 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package org.simon.stuff.block.entity;
 
 import net.minecraft.block.BlockState;

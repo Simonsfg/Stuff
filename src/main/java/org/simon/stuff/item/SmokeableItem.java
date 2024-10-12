@@ -1,107 +1,76 @@
 package org.simon.stuff.item;
 
-import java.util.List;
+import net.minecraft.entity.ItemEntity;
 
-import org.joml.Vector3f;
-
-import org.simon.stuff.block.PlacedDrinksBlock;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import org.simon.stuff.Stuff;
 import org.simon.stuff.entity.drug.DrugProperties;
-import org.simon.stuff.entity.drug.influence.DrugInfluence;
-import org.simon.stuff.particle.ExhaledSmokeParticleEffect;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.entity.EquipmentSlot;
+import org.simon.stuff.entity.drug.DrugType;
+import org.simon.stuff.network.JointEffectPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 public class SmokeableItem extends Item {
-    public static Vector3f WHITE = new Vector3f(1, 1, 1);
 
-    private final List<DrugInfluence> drugEffects;
+    private final int effectDuration = 20 * 20;
 
-    private final Vector3f smokeColor;
-
-    private final int useStages;
-
-    public SmokeableItem(Settings settings, int useStages, Vector3f smokeColor, DrugInfluence... drugEffects) {
+    public SmokeableItem(Settings settings) {
         super(settings);
-        this.smokeColor = smokeColor;
-        this.useStages = useStages;
-        this.drugEffects = List.of(drugEffects);
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return 25;
-    }
-
-    public int getStages() {
-        return useStages;
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack itemStack = user.getStackInHand(hand);
+        user.setCurrentHand(hand);
+        return TypedActionResult.consume(itemStack);
     }
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.TOOT_HORN;
+        return UseAction.NONE; // Use the vanilla CUSTOM action
     }
 
     @Override
-    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity entity) {
-        DrugProperties.of(entity).ifPresent(drugProperties -> {
-            drugProperties.addAll(drugEffects);
-            drugProperties.startBreathingSmoke(10 + world.random.nextInt(10), smokeColor);
-        });
+    public int getMaxUseTime(ItemStack stack) {
+        return 20; // 1 second of "smoking" animation
+    }
 
-        if (!(entity instanceof PlayerEntity && ((PlayerEntity)entity).getAbilities().creativeMode)) {
-            if (!stack.isDamageable()) {
-                stack.decrement(1);
-            } else {
-                stack.damage(1, entity, p -> p.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
+    @Override
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+        if (user instanceof ServerPlayerEntity player) {
+            DrugProperties drugProperties = DrugProperties.of(player);
+            drugProperties.addToDrug(DrugType.CANNABIS, 1.0);
+            drugProperties.startTrip(effectDuration);
+            
+            // Send packet to client to start the visual effect
+            JointEffectPacket.send(player, effectDuration);
+            
+            if (!player.getAbilities().creativeMode) {
+                // Check if the item will break with this use
+                if (stack.getDamage() + 1 >= stack.getMaxDamage()) {
+                    // Play custom break sound
+                    world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                            SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    
+                    // Decrease the stack without calling damage()
+                    stack.decrement(1);
+                } else {
+                    // If not breaking, just damage the item normally
+                    stack.damage(1, player, (p) -> p.sendToolBreakStatus(p.getActiveHand()));
+                }
             }
         }
-
-        return super.finishUsing(stack, world, entity);
+        return stack;
     }
 
-    @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        return PlacedDrinksBlock.tryPlace(context);
+    public StuffUseAction getCustomUseAction(ItemStack stack) {
+        return StuffUseAction.SMOKE_JOINT;
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-
-        if (!DrugProperties.of(player).isBreathingSmoke()) {
-            player.setCurrentHand(hand);
-            return TypedActionResult.consume(stack);
-        }
-
-        return TypedActionResult.fail(stack);
-    }
-
-    public void onIncinerated(ItemStack stack, World world, BlockPos pos, AbstractFurnaceBlockEntity furnace) {
-        world.getEntitiesByClass(PlayerEntity.class, new Box(pos).expand(3), EntityPredicates.EXCEPT_SPECTATOR).forEach(player -> {
-            DrugProperties.of(player).addAll(drugEffects);
-        });
-
-        var effect = new ExhaledSmokeParticleEffect(smokeColor, 1);
-        for (int i = 0; i < 30; i++) {
-            ((ServerWorld)world).spawnParticles(effect,
-                    world.random.nextTriangular(pos.getX() + 0.5, 0.3),
-                    pos.getY() + 1,
-                    world.random.nextTriangular(pos.getZ() + 0.5, 0.3),
-                    1,
-                    world.random.nextTriangular(0, 0.3),
-                    world.random.nextTriangular(0.8, 0.3),
-                    world.random.nextTriangular(0, 0.3), 0.001F);
-        }
-    }
 }

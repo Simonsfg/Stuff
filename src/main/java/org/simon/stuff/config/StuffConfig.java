@@ -15,9 +15,6 @@ public class StuffConfig {
         public int dryingTableTickDuration = MINUTE * 16;
         public int ironDryingTableTickDuration = MINUTE * 12;
         public int slurryHardeningTime = MINUTE * 30;
-        public boolean enableHarmonium;
-        public boolean enableRiftJars;
-        public boolean disableMolotovs;
         public Generation worldGeneration = new Generation(
                 Generation.FeatureConfig.DEFAULT, Generation.FeatureConfig.DEFAULT,
                 Generation.FeatureConfig.DEFAULT, Generation.FeatureConfig.DEFAULT,

@@ -1,0 +1,44 @@
+package org.simon.stuff.client.render;
+
+import net.minecraft.client.model.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
+import net.minecraft.entity.passive.PigEntity;
+
+public class RastaHeadModel extends SinglePartEntityModel<PigEntity> {
+    private final ModelPart root;
+
+    public RastaHeadModel() {
+        super(RenderLayer::getEntityTranslucent);
+        this.root = TexturedModelData.of(getModelData(Dilation.NONE), 128, 64).createModel();
+    }
+
+    public static ModelData getModelData(Dilation dilation) {
+        ModelData data = new ModelData();
+        ModelPartData root = data.getRoot();
+        ModelPartData head = root.addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create()
+                .uv(0, 0).cuboid(-4, -8, -4, 8, 8, 8, dilation).mirrored(), ModelTransform.NONE);
+        head.addChild("nose", ModelPartBuilder.create()
+                .uv(33, 0).cuboid(-0.5F, -4.8F, -5F, 1, 2, 1, dilation).mirrored(), ModelTransform.rotation(-0.0743572F, 0, 0));
+        head.addChild("nostrils", ModelPartBuilder.create()
+                .uv(38, 0).cuboid(-1F, -4.2F, -4.5F, 2, 1, 1, dilation).mirrored(), ModelTransform.NONE);
+        head.addChild("hair", ModelPartBuilder.create()
+                .uv(0, 17).cuboid(-4.5F, -7.5F, -4.5F, 9, 11, 9, dilation).mirrored(), ModelTransform.NONE);
+        root.addChild(EntityModelPartNames.HAT, ModelPartBuilder.create()
+                .uv(0, 38).cuboid(-5F, -10F, -8.5F, 10, 7, 12, dilation).mirrored(), ModelTransform.rotation(-0.669215F, 0, 0));
+        root.addChild("joint", ModelPartBuilder.create()
+                .uv(0, 0).cuboid(-0.5F, -3.5F, -5F, 1, 1, 2, dilation).mirrored(), ModelTransform.rotation(0.4089647F, -0.2602503F, 0));
+        return data;
+    }
+
+    @Override
+    public void setAngles(PigEntity var1, float var2, float var3, float var4, float var5, float var6) {
+
+    }
+
+    @Override
+    public ModelPart getPart() {
+        return root;
+    }
+}

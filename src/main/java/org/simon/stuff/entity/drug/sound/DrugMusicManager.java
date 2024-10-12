@@ -7,10 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 
-/**
- * Created by lukas on 22.11.14.
- * Updated by Sollace on 15 Jan 2023
- */
+
 public class DrugMusicManager {
     public static final float PLAY_THRESHOLD = 0.01F;
 

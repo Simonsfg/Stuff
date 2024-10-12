@@ -1,56 +1,80 @@
 {
-  "among_us": {
+  "music_disc.among_us": {
     "sounds": [
       {
-        "name": "stuff:among_us",
+        "name": "stuff:music/disc/among_us",
         "stream": true
       }
     ]
   },
-  "bitches": {
+  "music_disc.bitches": {
     "sounds": [
       {
-        "name": "stuff:bitches",
+        "name": "stuff:music/disc/bitches",
         "stream": true
       }
     ]
   },
-  "hamburg": {
+  "music_disc.hamburg": {
     "sounds": [
       {
-        "name": "stuff:hamburg",
+        "name": "stuff:music/disc/hamburg",
         "stream": true
       }
     ]
   },
-  "its_lit": {
+  "music_disc.its_lit": {
     "sounds": [
       {
-        "name": "stuff:its_lit",
+        "name": "stuff:music/disc/its_lit",
         "stream": true
       }
     ]
   },
-  "lockdown": {
+  "music_disc.lockdown": {
     "sounds": [
       {
-        "name": "stuff:lockdown",
+        "name": "stuff:music/disc/lockdown",
         "stream": true
       }
     ]
   },
-  "arschrap": {
+  "music_disc.arschrap": {
     "sounds": [
       {
-        "name": "stuff:arschrap",
+        "name": "stuff:music/disc/arschrap",
         "stream": true
       }
     ]
   },
-  "dota3": {
+  "music_disc.miau_miau_miau": {
     "sounds": [
       {
-        "name": "stuff:dota3",
+        "name": "stuff:music/disc/miau_miau_miau",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.dumptruck": {
+    "sounds": [
+      {
+        "name": "stuff:music/disc/dumptruck",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.spast": {
+    "sounds": [
+      {
+        "name": "stuff:music/disc/spast",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.dota3": {
+    "sounds": [
+      {
+        "name": "stuff:music/disc/dota3",
         "stream": true
       }
     ]

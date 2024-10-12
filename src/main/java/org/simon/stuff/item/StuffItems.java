@@ -1,21 +1,14 @@
 package org.simon.stuff.item;
 
-import org.joml.Vector3f;
-
 import org.simon.stuff.Stuff;
 import org.simon.stuff.block.StuffBlocks;
-import org.simon.stuff.entity.drug.*;
-import org.simon.stuff.entity.drug.influence.DrugInfluence;
 import net.minecraft.block.Block;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import org.simon.stuff.item.discs.MusicDiscManager;
 
-/**
- * Created by lukas on 25.04.14.
- * Updated by Sollace on 1 Jan 2023
- */
 public interface StuffItems {
 
     Item CANNABIS_SEEDS = register("cannabis_seeds", new AliasedBlockItem(StuffBlocks.CANNABIS, new Settings()));
@@ -31,8 +24,7 @@ public interface StuffItems {
             ), SuspiciousItem.createForms(Items.COOKIE, Items.MUSHROOM_STEW, Items.GOLDEN_APPLE, Items.COOKED_BEEF, Items.COOKED_CHICKEN)));
 
     SmokeableItem JOINT = register("joint", new SmokeableItem(
-            new Settings().maxCount(1).maxDamage(2), 2, new Vector3f(0.9F, 0.9F, 0.9F),
-            new DrugInfluence(DrugType.CANNABIS, DrugInfluence.DelayType.INHALED, 0.002, 0.001, 0.20f)
+            new Settings().maxCount(1).maxDamage(3)
     ));
 
     static Item register(String name, Block block) {
@@ -48,6 +40,6 @@ public interface StuffItems {
     }
 
     static void bootstrap() {
-
+        MusicDiscManager.registerMusicDiscs();
     }
 }

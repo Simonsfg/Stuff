@@ -1,8 +1,3 @@
-/*
- *  Copyright (c) 2014, Lukas Tenbrink.
- *  * http://lukas.axxim.net
- */
-
 package org.simon.stuff.entity.drug.type;
 
 import java.util.Optional;

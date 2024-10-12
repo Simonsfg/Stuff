@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import org.simon.stuff.Stuff;
-import org.simon.stuff.registry.ItemRegistry;
+import org.simon.stuff.item.discs.MusicDiscManager;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,25 +15,19 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         super(output, registriesFuture);
     }
 
+    private void generateMusicDiscTags() {
+        var musicDiscBuilder = getOrCreateTagBuilder(ItemTags.MUSIC_DISCS);
+        var creeperDropBuilder = getOrCreateTagBuilder(ItemTags.CREEPER_DROP_MUSIC_DISCS);
+
+        MusicDiscManager.MUSIC_DISC_ITEMS.forEach(disc -> {
+            musicDiscBuilder.add(disc);
+            creeperDropBuilder.add(disc);
+        });
+    }
+
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         Stuff.LOGGER.info("Generating item tags");
-        getOrCreateTagBuilder(ItemTags.MUSIC_DISCS)
-                .add(ItemRegistry.MUSIC_DISC_BITCHES)
-                .add(ItemRegistry.MUSIC_DISC_ARSCHRAP)
-                .add(ItemRegistry.MUSIC_DISC_HAMBURG)
-                .add(ItemRegistry.MUSIC_DISC_LOCKDOWN)
-                .add(ItemRegistry.MUSIC_DISC_ITS_LIT)
-                .add(ItemRegistry.MUSIC_DISC_DOTA3)
-                .add(ItemRegistry.MUSIC_DISC_AMONG_US);
-
-        getOrCreateTagBuilder(ItemTags.CREEPER_DROP_MUSIC_DISCS)
-                .add(ItemRegistry.MUSIC_DISC_BITCHES)
-                .add(ItemRegistry.MUSIC_DISC_ARSCHRAP)
-                .add(ItemRegistry.MUSIC_DISC_HAMBURG)
-                .add(ItemRegistry.MUSIC_DISC_LOCKDOWN)
-                .add(ItemRegistry.MUSIC_DISC_ITS_LIT)
-                .add(ItemRegistry.MUSIC_DISC_DOTA3)
-                .add(ItemRegistry.MUSIC_DISC_AMONG_US);
+        generateMusicDiscTags();
     }
 }

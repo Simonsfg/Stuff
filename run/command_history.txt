@@ -1,31 +1,3 @@
-/summon stuff:egg
-/gamerule doDaylightCycle false
-/time set 6000
-/give @p stuff:egg_spawn_egg
-/enchant @a minecraft:sharpness 5
-/give @p stuff:coin
-/summon stuff:egg
-/effect give @a stuff:custom_effect
-/effect give @a stuff:custom_effect 1
-/effect give @a stuff:custom_effect
-/effect give @a stuff:custom_effect 10
-/effect give @a stuff:custom_effect 1
-/effect give @a stuff:custom_effect 10
-/give @a stuff:music_disc_bitches
-/gamemode survival
-/give @a stuff:music_disc_bitches
-/gamemode creative
-/give @a stuff:music_disc_bitches
-/give @p stuff:music_disc_among_us
-/give @p stuff:music_disc_hamburg
-/give @p stuff:music_disc_its_lit
-/give @p stuff:music_disc_lockdown
-/weather clear
-/gamerule doWeatherCycle false
-/give @a stuff:music_disc_arschrap
-/give @a stuff:music_disc_dota3
-/summon skeleton ~ ~ ~ {Invulnerable:1b,PersistenceRequired:1b,Attributes:[{Name:"generic.movement_speed",Base:-1024f}]}
-/gamemode survival
 /summon skeleton ~ ~ ~ {Invulnerable:1b,PersistenceRequired:1b,HandItems:[{id:bow,Count:1}],Attributes:[{Name:"generic.movement_speed",Base:-1024f}],HandDropChances:[0f]}
 /gamemode creative
 /give @a minecraft:command_block
@@ -47,3 +19,32 @@
 /gamerule randomTickSpeed 100
 /gamerule randomTickSpeed 1000
 /gamemode survival
+/give @p stuff:bag_o_vomit
+/give @p stuff:joint
+/give @p stuff:bag_o_vomit
+/give @p stuff:dried_cannabis_buds
+/give @p stuff:cannabis_leaf
+/give @p stuff:cannabis_seeds_leaf
+/give @p stuff:cannabis_seeds
+/give @p stuff:dried_cannabis_buds
+/give @p stuff:dried_cannabis_leaf
+/give @p stuff:paper_bag
+/give @p stuff:vomit
+/give @p stuff:weed_leaf
+/effect give @a stuff:custom_effect
+/gamemode creative
+/give @p minecraft:command_block
+/particle stuff:exhaled_smoke
+/vomit @a
+/gamerule randomTickSpeed 1000
+/gamemode survival
+/give @p stuff:joint
+/gamemode creative
+/give @p stuff:joint
+/effect give @p minecraft:darkness
+/gamemode survival
+/give @p stuff:joint
+/effect give @a minecraft:saturation infinite 1 true
+/effect give @a minecraft:resistance infinite 10 true
+/give @p stuff:joint
+/gamemode creative
